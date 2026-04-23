@@ -4,7 +4,7 @@ import axios from "axios";
 import { FiMail, FiPhone, FiMapPin, FiSend, FiGithub, FiLinkedin } from "react-icons/fi";
 import { personalInfo } from "../data/portfolioData.js";
 
-const API_BASE = "portfolio-backend-production-a52a.up.railway.app";
+const API_BASE = "https://portfolio-backend-production-a52a.up.railway.app";
 
 const contactInfo = [
   { icon: <FiMail />, label: "Email", value: personalInfo.email, href: `mailto:${personalInfo.email}` },
