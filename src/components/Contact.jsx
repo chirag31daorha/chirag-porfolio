@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import axios from "axios";
+import emailjs from "@emailjs/browser";
 import { FiMail, FiPhone, FiMapPin, FiSend, FiGithub, FiLinkedin } from "react-icons/fi";
 import { personalInfo } from "../data/portfolioData.js";
 
-const API_BASE = "https://portfolio-backend-production-a52a.up.railway.app";
+const EMAILJS_SERVICE_ID = "service_t5rmw8w";
+const EMAILJS_TEMPLATE_ID = "template_elc3lqm";
+const EMAILJS_PUBLIC_KEY = "JNNeL8cCIXBGWuGLV";
 
 const contactInfo = [
   { icon: <FiMail />, label: "Email", value: personalInfo.email, href: `mailto:${personalInfo.email}` },
@@ -48,7 +50,17 @@ export default function Contact() {
     if (!form.name || !form.email || !form.message) return;
     setStatus("loading");
     try {
-      await axios.post(`${API_BASE}/api/contact`, form);
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          email: form.email,
+          title: form.subject,
+          message: form.message,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
       setStatus("success");
       setForm({ name: "", email: "", subject: "", message: "" });
     } catch {
